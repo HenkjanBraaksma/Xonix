@@ -28,7 +28,7 @@ public class GameWorld extends java.util.Observable
     public java.util.ArrayList<MonsterBall> mbs;
     public java.util.ArrayList<TimeTicket> tts;
     public final Car car;
-    public RealState rstate;
+    private RealState rstate;
     public ProxyState state;
     public final java.util.Random random;
     /**
@@ -68,6 +68,10 @@ public class GameWorld extends java.util.Observable
             }
         });
         this.play ();
+    }
+    public void AddScore(int filledsquares)
+    {
+        rstate.addcscore(filledsquares);
     }
     
     public static GameWorld getInstance()

@@ -99,10 +99,10 @@ class Car extends MovingObject implements Colorable, Moveable, Steerable
             fsnext.setColor (GameWorld.LINE_COLOR);
     }
     
-    public void fillAllSquares(FieldSquares fss, RealState state)
+    public void fillAllSquares(FieldSquares fss)
     {
         if (fsnext.getColor () == GameWorld.PLAYER_COLOR && fsprev.getColor () == GameWorld.LINE_COLOR)
-            state.addcscore (fss.fillSquares ());
+            GameWorld.getInstance().AddScore(fss.fillSquares ());
     }
 
     @Override

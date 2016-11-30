@@ -108,7 +108,7 @@ public class GameView extends javax.swing.JFrame implements java.util.Observer
             /**
              * game over screen
              */
-            if (gw.rstate.isGameOver ())
+            if (gw.state.isGameOver ())
             {
                 java.awt.Font font = new java.awt.Font ("Helvetica", java.awt.Font.BOLD, 18);
                 java.awt.FontMetrics metrics = g.getFontMetrics (font);

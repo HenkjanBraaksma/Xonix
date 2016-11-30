@@ -149,7 +149,7 @@ public class GameController
             @Override
             public void actionPerformed (java.awt.event.ActionEvent e)
             {
-                GameWorld.getInstance().car.fillAllSquares(GameWorld.getInstance().fss, GameWorld.getInstance().rstate);
+                GameWorld.getInstance().car.fillAllSquares(GameWorld.getInstance().fss);
             }
         }
         
