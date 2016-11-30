@@ -15,7 +15,8 @@ class MonsterBall extends MovingObject implements Colorable, Moveable
     private FieldSquare fsnext;
     private java.awt.geom.Point2D.Float prev;
     private java.awt.geom.Point2D.Float next;
-    private boolean homing = false;
+    private int homing = 0;
+    Context context = new Context(new OperationNormal());
     /**
      * Constructor of Monsterball
      * @param loc location
@@ -40,12 +41,12 @@ class MonsterBall extends MovingObject implements Colorable, Moveable
         this.radius = radius;
     }
     
-    public boolean getHoming ()
+    public int getHoming ()
     {
         return homing;
     }
 
-    public void setHoming (boolean homing)
+    public void setHoming (int homing)
     {
         this.homing = homing;
     }
@@ -72,10 +73,31 @@ class MonsterBall extends MovingObject implements Colorable, Moveable
    @Override public java.awt.geom.Point2D.Float nextLocation (float delta)
     {
         double radians;
-        if (homing)
-            radians = Math.atan2(((getLocation().x)-(GameWorld.getInstance().car.getLocation().x)),((getLocation().y)-GameWorld.getInstance().car.getLocation().y)) + (0.5 * Math.PI);
-        else
-            radians = Math.toRadians (getHeading ());
+        switch (homing)
+        {
+            case (2):
+                context = new Context(new OperationFollow());
+                break;
+            case (1):
+                context = new Context(new OperationOrbit());
+                break;
+            case (3):
+                context = new Context(new OperationScared());
+                break;
+            case(0):
+            default:
+                context = new Context(new OperationNormal());
+                break;
+        }
+//        if (homing == 2)
+//             context = new Context(new OperationFollow());
+//        else if (homing == 1)
+//             context = new Context(new OperationOrbit());
+//        else if (homing == 3)
+//             context = new Context(new OperationScared());
+//        else
+//             context = new Context(new OperationNormal());
+        radians = context.executeStrategy(getLocation().x, getLocation().y, GameWorld.getInstance().car.getLocation().x, GameWorld.getInstance().car.getLocation().y, getHeading ());
         float newx = getLocation ().x + delta * getSpeed () * (float) Math.cos (radians);
         if (newx < 0)
             newx = 0;

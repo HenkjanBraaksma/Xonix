@@ -139,10 +139,7 @@ public class GameController
                 for (MonsterBall mb : GameWorld.getInstance().mbs)
                 {
                     mb.Collision(GameWorld.getInstance().fss);
-                    if (mb.getHoming() == true)
-                        mb.setHoming(false);
-                    else
-                        mb.setHoming(true);
+                    mb.setHoming((mb.getHoming() +1) % 4);
                 }
             }
         }
