@@ -15,6 +15,7 @@ class MonsterBall extends MovingObject implements Colorable, Moveable
     private FieldSquare fsnext;
     private java.awt.geom.Point2D.Float prev;
     private java.awt.geom.Point2D.Float next;
+    private boolean homing = false;
     /**
      * Constructor of Monsterball
      * @param loc location
@@ -38,6 +39,16 @@ class MonsterBall extends MovingObject implements Colorable, Moveable
     {
         this.radius = radius;
     }
+    
+    public boolean getHoming ()
+    {
+        return homing;
+    }
+
+    public void setHoming (boolean homing)
+    {
+        this.homing = homing;
+    }
     /**
      * Change Location of Monsterball
      * @param fss fieldsquares
@@ -57,6 +68,25 @@ class MonsterBall extends MovingObject implements Colorable, Moveable
         Collision(fss);
         getLocation ().setLocation (nextLocation (delta));
         return false;
+    }
+   @Override public java.awt.geom.Point2D.Float nextLocation (float delta)
+    {
+        double radians;
+        if (homing)
+            radians = Math.atan2(((getLocation().x)-(GameWorld.getInstance().car.getLocation().x)),((getLocation().y)-GameWorld.getInstance().car.getLocation().y)) + (0.5 * Math.PI);
+        else
+            radians = Math.toRadians (getHeading ());
+        float newx = getLocation ().x + delta * getSpeed () * (float) Math.cos (radians);
+        if (newx < 0)
+            newx = 0;
+        else if (newx > GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1))
+            newx = GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1);
+        float newy = getLocation ().y - delta * getSpeed () * (float) Math.sin (radians);
+        if (newy < 0)
+            newy = 0;
+        else if (newy > GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1))
+            newy = GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1);
+        return new java.awt.geom.Point2D.Float (newx, newy);
     }
     
     public void Collision(FieldSquares fss)

@@ -130,6 +130,22 @@ public class GameController
                 GameWorld.getInstance().TimeTicketCollision();
             }
         }
+        
+        public class Switchbombstrategies extends Command
+        {
+            @Override
+            public void actionPerformed (java.awt.event.ActionEvent e)
+            {
+                for (MonsterBall mb : GameWorld.getInstance().mbs)
+                {
+                    mb.Collision(GameWorld.getInstance().fss);
+                    if (mb.getHoming() == true)
+                        mb.setHoming(false);
+                    else
+                        mb.setHoming(true);
+                }
+            }
+        }
                 
         public class NewGroupOfSquares extends Command
         {
@@ -189,7 +205,9 @@ public class GameController
         menuItem = new javax.swing.JMenuItem (new NewTimeticket());
         menuItem.setText("Add TimeTicket");
         menu.add (menuItem);
-        menuItem = new javax.swing.JMenuItem ("Switch bombstrategies ");
+        menuItem = new javax.swing.JMenuItem (new Switchbombstrategies());
+        menuItem.setText("Switch bombstrategies");
+//        menuItem = new javax.swing.JMenuItem ("Switch bombstrategies ");
         menu.add (menuItem);
         menuBar.add (menu);
         gv.setJMenuBar (menuBar);
@@ -223,6 +241,9 @@ public class GameController
 
             gv.map.getInputMap (javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke (java.awt.event.KeyEvent.VK_M, 0),"NewTimeticket");
             gv.map.getActionMap ().put ("NewTimeticket", new NewTimeticket());
+            
+            gv.map.getInputMap (javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke (java.awt.event.KeyEvent.VK_SPACE, 0),"Switchbombstrategies");
+            gv.map.getActionMap ().put ("Switchbombstrategies", new Switchbombstrategies());
             
             gv.map.getInputMap (javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke (java.awt.event.KeyEvent.VK_Q, 0),"QuitGame");
             gv.map.getActionMap ().put ("QuitGame", new QuitGame());
