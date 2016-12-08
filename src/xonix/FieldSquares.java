@@ -1,8 +1,10 @@
 package xonix;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import javafx.geometry.Point3D;
 
-class FieldSquares
+class FieldSquares implements Iterable<FieldSquare[]>
 {
 
     private final FieldSquare[][] fsss;
@@ -26,7 +28,13 @@ class FieldSquares
     {
         return fsss[i][j];
     }
-
+    
+    @Override
+    public Iterator<FieldSquare[]> iterator()
+    {
+        return Arrays.asList(fsss).iterator();
+    }
+    
     public void reset ()
     {
         setFields (GameWorld.PLAYER_COLOR, GameWorld.SQUARE_COLOR);

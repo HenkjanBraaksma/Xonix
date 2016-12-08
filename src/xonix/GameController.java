@@ -16,8 +16,7 @@ public class GameController
 {
     private static GameController controller = new GameController();
     private GameWorld gw = GameWorld.getInstance();
-    private GameView gv = GameView.getInstance();
-    
+    private GameView gv = new GameView( new MapView(), new ScoreView());
     private javax.swing.Timer timer = new javax.swing.Timer(GAME_TICK_DELAY, new TimeTickUpdate());
     
     private GameController() 
@@ -25,6 +24,7 @@ public class GameController
         gw.addObserver(gv);
         SetTimer();
         setMenu();
+        setKeys();
     }
     abstract class Command extends javax.swing.AbstractAction implements java.awt.event.ActionListener 
     { 
@@ -210,7 +210,7 @@ public class GameController
         gv.setJMenuBar (menuBar);
     }
         
-        public void KeyCommand (int keycode)
+        public void setKeys ()
         {
             gv.map.getInputMap (javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke (java.awt.event.KeyEvent.VK_W, 0),"GoNorth");
             gv.map.getActionMap ().put ("GoNorth", new GoNorth());

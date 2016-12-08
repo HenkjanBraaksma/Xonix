@@ -23,7 +23,7 @@ public class GameWorld extends java.util.Observable
     static final int RSCORE_START = (40 + LEVEL_START * 10) * 100;
     static final int TTIME_START = 6 - LEVEL_START;
 
-    public final GameView gv;
+//    public final GameView gv;
     public final FieldSquares fss;
     public java.util.ArrayList<MonsterBall> mbs;
     public java.util.ArrayList<TimeTicket> tts;
@@ -39,35 +39,13 @@ public class GameWorld extends java.util.Observable
     private GameWorld ()
     {
         this.random = new java.util.Random ();
-        this.gv = GameView.getInstance();
-        this.gv.setWorld (this);
         this.fss = FieldSquares.getInstance();
         createMonsterballs ();
         createTimeTickets ();
         this.car = Car.getInstance();
-        //this.car = new Car (new java.awt.geom.Point2D.Float (SQUARE_LENGTH / 2 * SQUARE_UNITS, (SQUARE_LENGTH - 1) * SQUARE_UNITS), CAR_COLOR, 270, 50, SQUARE_UNITS, SQUARE_UNITS);
         this.rstate = new RealState();
         this.state = new ProxyState(rstate);
-        gv.addKeyListener (new java.awt.event.KeyListener ()
-        {
-            @Override
-            public void keyTyped (java.awt.event.KeyEvent e)
-            {
-            }
 
-            @Override
-            public void keyPressed (java.awt.event.KeyEvent e)
-            {
-//                execute (e.getKeyCode ());
-                GameController.getInstance().KeyCommand(e.getKeyCode());
-            }
-
-            @Override
-            public void keyReleased (java.awt.event.KeyEvent e)
-            {
-            }
-        });
-        this.play ();
     }
     public void AddScore(int filledsquares)
     {
@@ -98,13 +76,7 @@ public class GameWorld extends java.util.Observable
         for (int i = 0; i < number; i ++)
             tts.add (new TimeTicket (new java.awt.geom.Point2D.Float (random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), TICKET_COLOR, TTIME_START, 7, 7));
     }
-    /**
-     * Loop of the game
-     */
-    public void play ()
-    {
-        gv.score.update ();
-    }
+
 /**
  * Updates constantly
  * @param delta 
@@ -155,7 +127,6 @@ public class GameWorld extends java.util.Observable
             {
                 rstate.setClock (rstate.getClock () + tt.getSeconds ());
                 tts.remove (tt);
-                gv.score.update ();
                 break;
             }
     }
@@ -170,5 +141,10 @@ public class GameWorld extends java.util.Observable
         createTimeTickets ();
         this.car.reset ();
         this.rstate.reset ();
+    }
+    
+    public FieldSquares getFieldSquares ()
+    {
+        return fss;
     }
 }

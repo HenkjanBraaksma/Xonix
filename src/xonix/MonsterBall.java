@@ -89,14 +89,6 @@ class MonsterBall extends MovingObject implements Colorable, Moveable
                 context = new Context(new OperationNormal());
                 break;
         }
-//        if (homing == 2)
-//             context = new Context(new OperationFollow());
-//        else if (homing == 1)
-//             context = new Context(new OperationOrbit());
-//        else if (homing == 3)
-//             context = new Context(new OperationScared());
-//        else
-//             context = new Context(new OperationNormal());
         radians = context.executeStrategy(getLocation().x, getLocation().y, GameWorld.getInstance().car.getLocation().x, GameWorld.getInstance().car.getLocation().y, getHeading ());
         float newx = getLocation ().x + delta * getSpeed () * (float) Math.cos (radians);
         if (newx < 0)
