@@ -25,6 +25,7 @@ public class GameController
         SetTimer();
         setMenu();
         setKeys();
+        setSound();
     }
     abstract class Command extends javax.swing.AbstractAction implements java.awt.event.ActionListener 
     { 
@@ -71,6 +72,7 @@ public class GameController
             @Override
             public void actionPerformed (java.awt.event.ActionEvent e)
             {
+                SoundEffect.WIII.play();
                 GameWorld.getInstance().car.setSpeed (GameWorld.getInstance().car.getSpeed () + 5);
             }
         }
@@ -127,7 +129,10 @@ public class GameController
             @Override
             public void actionPerformed (java.awt.event.ActionEvent e)
             {
-                GameWorld.getInstance().TimeTicketCollision();
+                if (GameWorld.getInstance().TimeTicketCollision())
+                {
+                    SoundEffect.WOW.play();
+                }
             }
         }
         
@@ -149,7 +154,10 @@ public class GameController
             @Override
             public void actionPerformed (java.awt.event.ActionEvent e)
             {
-                GameWorld.getInstance().car.fillAllSquares(GameWorld.getInstance().fss);
+                if (GameWorld.getInstance().car.fillAllSquares(GameWorld.getInstance().fss))
+                {
+                    SoundEffect.OWHYEH.play();
+                }
             }
         }
         
@@ -169,6 +177,10 @@ public class GameController
             {
                  System.exit(0);
             }
+        }
+        public void Evillaughsound()
+        {
+            SoundEffect.EVILLAUGH.play();
         }
         
     private void setMenu ()
@@ -265,6 +277,12 @@ public class GameController
     
     public static GameController getInstance() {
         return controller;
+    }
+    
+    public void setSound()
+    {
+      SoundEffect.init();
+      SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
     }
 }
 

@@ -31,6 +31,7 @@ public class GameWorld extends java.util.Observable
     private RealState rstate;
     public ProxyState state;
     public final java.util.Random random;
+    
     /**
      * initialization
      */
@@ -103,7 +104,7 @@ public class GameWorld extends java.util.Observable
             /**
              * checks if car is on location of a timeticket
              */
-            TimeTicketCollision();
+            GameController.getInstance().new CollisionTimeticket().actionPerformed(null);
             /**
              * checks if start of new level
              */
@@ -120,15 +121,16 @@ public class GameWorld extends java.util.Observable
         this.notifyObservers();
     }
     
-    public void TimeTicketCollision()
+    public boolean TimeTicketCollision()
     {
         for (TimeTicket tt : tts)
             if (tt.contains (car.getLocation ()))
             {
                 rstate.setClock (rstate.getClock () + tt.getSeconds ());
                 tts.remove (tt);
-                break;
+                return true;
             }
+        return false;
     }
     
     /**

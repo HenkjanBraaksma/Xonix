@@ -65,7 +65,10 @@ class MonsterBall extends MovingObject implements Colorable, Moveable
         fsnext = fss.elementAt ((int) (next.x / GameWorld.SQUARE_UNITS + 0.5), (int) (next.y / GameWorld.SQUARE_UNITS + 0.5));
 
         if (fsprev.getColor () == GameWorld.LINE_COLOR || fsnext.getColor () == GameWorld.LINE_COLOR)
+        {
+            GameController.getInstance().Evillaughsound();
             return true;
+        }
         Collision(fss);
         getLocation ().setLocation (nextLocation (delta));
         return false;

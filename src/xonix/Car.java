@@ -86,10 +86,12 @@ class Car extends MovingObject implements Colorable, Moveable, Steerable
         java.awt.geom.Point2D.Float next = nextLocation (delta);
         fsprev = fss.elementAt ((int) (prev.x / GameWorld.SQUARE_UNITS + 0.5), (int) (prev.y / GameWorld.SQUARE_UNITS + 0.5));
         fsnext = fss.elementAt ((int) (next.x / GameWorld.SQUARE_UNITS + 0.5), (int) (next.y / GameWorld.SQUARE_UNITS + 0.5));
-        if (fsnext.getColor () == GameWorld.SQUARE_COLOR)
-            fsnext.setColor (GameWorld.LINE_COLOR);
-        else if (fsnext.getColor () == GameWorld.PLAYER_COLOR && fsprev.getColor () == GameWorld.LINE_COLOR)
-            state.addcscore (fss.fillSquares ());
+        GameController.getInstance().new NewGroupOfSquares().actionPerformed(null);
+        redsquare();
+//        if (fsnext.getColor () == GameWorld.SQUARE_COLOR)
+//            fsnext.setColor (GameWorld.LINE_COLOR);
+//        else if (fsnext.getColor () == GameWorld.PLAYER_COLOR && fsprev.getColor () == GameWorld.LINE_COLOR)
+//            state.addcscore (fss.fillSquares ());
         getLocation ().setLocation (next);
     }
     
@@ -99,10 +101,14 @@ class Car extends MovingObject implements Colorable, Moveable, Steerable
             fsnext.setColor (GameWorld.LINE_COLOR);
     }
     
-    public void fillAllSquares(FieldSquares fss)
+    public boolean fillAllSquares(FieldSquares fss)
     {
         if (fsnext.getColor () == GameWorld.PLAYER_COLOR && fsprev.getColor () == GameWorld.LINE_COLOR)
+        {
             GameWorld.getInstance().AddScore(fss.fillSquares ());
+            return true;
+        }
+        return false;
     }
 
     @Override
